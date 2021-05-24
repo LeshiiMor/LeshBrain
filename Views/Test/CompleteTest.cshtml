@@ -27,7 +27,9 @@
                                     <div class="m-3">
                                         <input type="text" value="@Model.Test.Questions[Model.Passer.PageNumber].Answers[i].Content" class="form-control tbhr-input" placeholder="Ответ" disabled>
                                         <label for="isTrue">Он верный ? </label>
-                                        <input type="checkbox" name="isTrue" value="@i"/><br />
+                                        @*<input type="checkbox" name="isTrue" @(Model.Test.Questions[Model.Passer.PageNumber].Answers[i].RightAnswer?"value=\"1\"":"value=\"0\"")/><br />*@
+                                        <input type="checkbox"/ name="isTrue" value="@Model.Test.Questions[Model.Passer.PageNumber].Answers[i].RightAnswer">
+                                        @*<input type="checkbox" name="isTrue" value="@(Model.Test.Questions[Model.Passer.PageNumber].Answers[i].RightAnswer?"1":"0")/><br />*@
                                     </div>
                                 }
                             </div>

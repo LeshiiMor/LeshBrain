@@ -1,0 +1,9 @@
+﻿@{ 
+    Layout = "_Layout";
+}
+<div>
+    @foreach(var claim in User.Claims)
+    {
+        <div>@claim.Type - @claim.Value</div><br>
+    }
+</div>

@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="~/css/bootstrap.css">
     <link rel="stylesheet" href="~/css/head.css">
+    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
 </head>
 <body>
     <nav class="navbar navbar-expand-lg header navbar-dark">
@@ -34,33 +35,32 @@
                 {
                     <div class="user_layout">
                         <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
-                                <span class="text-white">@User.Identity.Name</span><img src="~/Content/UsersImage/spanch.jpg" alt="avatar" class="img-user rounded-circle" />
+                            <button class="user_drop btn dropdown-toggle text-white" type="button" id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span class="name-us text-white"><strong>@User.Identity.Name</strong></span><img src="@User.Claims.First(p=>p.Type=="ImageURL").Value" alt="avatar" class="img-user rounded-circle" />
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownUser">
                                 <li>
                                     @if (User.IsInRole("admin"))
                                     {
-                                        <form method="get" asp-controller="Admin" asp-action="Index">
-                                            <button type="submit">Кабинет</button>
-                                        </form>
+                                        <a asp-controller="Admin" asp-action="Index" class="drop-item dropdown-item"><i class="drop-las las la-toolbox"></i><span>Кабинет</span></a>
                                     }
                                     else if (User.IsInRole("employee"))
                                     {
-                                        <form method="get" asp-controller="Client" asp-action="Index">
-                                            <button type="submit">Кабинет</button>
-                                        </form>
+                                        <a asp-controller="Client" asp-action="Index" class="drop-item dropdown-item"><i class="drop-las las la-toolbox"></i><span>Кабинет</span></a>
                                     }
                                     else if (User.IsInRole("mentor"))
                                     {
-                                        <form method="get" asp-controller="Mentor" asp-action="Index">
-                                            <button type="submit">Кабинет</button>
-                                        </form>
+                                        <a asp-controller="Mentor" asp-action="Index" class="drop-item dropdown-item"><i class="drop-las las la-toolbox"></i><span>Кабинет</span></a>
                                     }
                                 </li>
                                 <li>
+                                <li>
+                                    <a href="#" class="drop-item dropdown-item"><i class="drop-las las la-cog"></i><span>Настройки</span></a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
                                     <form method="post" asp-controller="Account" asp-action="Logout">
-                                        <button type="submit">Выйти</button>
+                                        <button type="submit" class="drop-item dropdown-item form-control btn"><i class="drop-las las la-sign-out-alt"></i><span>Выйти</span></button>
                                     </form>
                                 </li>
                             </ul>

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http.Features;
+using LeshBrain.Factories;
 
 namespace LeshBrain
 {
@@ -22,13 +23,25 @@ namespace LeshBrain
                 "server=localhost;user=root;password=admin;database=leshbrain;",
                 new MySqlServerVersion(new Version(8, 0, 21))
             ));
-            services.AddIdentity<UserEntity, IdentityRole<int>>(opts=>
+
+            //services.AddIdentity<UserEntity, IdentityRole<int>>(opts =>
+            //{
+            //    opts.Password.RequireDigit = false;
+            //    opts.Password.RequireUppercase = false;
+            //    opts.Password.RequiredLength = 5;
+            //    opts.Password.RequireNonAlphanumeric = false;
+            //}).AddEntityFrameworkStores<ContextDB>();
+
+            services.AddIdentity<UserEntity, IdentityRole<int>>(opts =>
             {
                 opts.Password.RequireDigit = false;
                 opts.Password.RequireUppercase = false;
                 opts.Password.RequiredLength = 5;
                 opts.Password.RequireNonAlphanumeric = false;
-            }).AddEntityFrameworkStores<ContextDB>();
+            }).AddClaimsPrincipalFactory<FactoryUserClaimsPrincipal>().AddEntityFrameworkStores<ContextDB>();
+            
+
+            services.AddScoped<IUserClaimsPrincipalFactory<UserEntity>, FactoryUserClaimsPrincipal>();
 
             services.AddControllersWithViews();
 

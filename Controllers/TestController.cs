@@ -193,21 +193,28 @@ namespace LeshBrain.Controllers
                     if (answers[i].RightAnswer) maxresult++;
                 }
                 int currentresult = maxresult;
-                for(int i=0;i<isTrue.Count;i++)
-                {
-                    int num = int.Parse(isTrue[i]);
-                    if (!answers[num].RightAnswer) currentresult--;
-                }
-                if(currentresult == maxresult)
+                //int answer = isTrue.Where(p => p.Equals("1")).Count();
+                int answer = isTrue.Count;
+                if(answer==currentresult)
                 {
                     model.CurrentResult++;
                 }
+
+                //for(int i=0;i<isTrue.Count;i++)
+                //{
+                //    int num = int.Parse(isTrue[i]);
+                //    if (!answers[num].RightAnswer) currentresult--;
+                //}
+                //if(currentresult == maxresult)
+                //{
+                //    model.CurrentResult++;
+                //}
 
                 if (model.Passer.PageNumber >= model.Test.AmountQuestion)
                 {
                     return RedirectToAction("ResultCompl", new { result = model.CurrentResult , max = model.Test.AmountQuestion });
                 }
-                return RedirectToAction("CompleteTest", new { id = model.Test.Id, page = model.Passer.PageNumber });
+                return RedirectToAction("CompleteTest", new { id = model.Test.Id, page = model.Passer.PageNumber,currentresult=model.CurrentResult });
             }
             return RedirectToAction("Index");
         }

@@ -110,6 +110,8 @@ namespace LeshBrain.Controllers
         }
 
         [HttpPost]
+        //[RequestSizeLimit(100_000_000)]
+        //[DisableRequestSizeLimit]
         [Authorize(Roles = "mentor,admin")]
         public async Task<IActionResult> Add(InfoBooksViewModel model, string categoryID, IFormFile newFile)
         {
