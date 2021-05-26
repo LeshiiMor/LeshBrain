@@ -24,14 +24,6 @@ namespace LeshBrain
                 new MySqlServerVersion(new Version(8, 0, 21))
             ));
 
-            //services.AddIdentity<UserEntity, IdentityRole<int>>(opts =>
-            //{
-            //    opts.Password.RequireDigit = false;
-            //    opts.Password.RequireUppercase = false;
-            //    opts.Password.RequiredLength = 5;
-            //    opts.Password.RequireNonAlphanumeric = false;
-            //}).AddEntityFrameworkStores<ContextDB>();
-
             services.AddIdentity<UserEntity, IdentityRole<int>>(opts =>
             {
                 opts.Password.RequireDigit = false;
@@ -44,16 +36,6 @@ namespace LeshBrain
             services.AddScoped<IUserClaimsPrincipalFactory<UserEntity>, FactoryUserClaimsPrincipal>();
 
             services.AddControllersWithViews();
-
-            //services.Configure<FormOptions>(options =>
-            //{
-            //    options.MultipartBodyLengthLimit = 100000000;
-            //});
-            //services.AddAuthorization(options =>
-            //{
-            //    options.AddPolicy("isAdmin",
-            //         policy => policy.RequireRole("super admin"));
-            //});
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

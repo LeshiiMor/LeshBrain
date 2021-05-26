@@ -19,14 +19,5 @@ namespace LeshBrain.Models
         public string Surname { get; set; }
         public string Patronym { get; set; }
         public double Raiting { get; set; } = 0;
-
-        //public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserClaimsPrincipalFactory<UserEntity> _claimsPrincipalFactory)
-        //{
-        //    // Add custom user claims here
-        //    ClaimsPrincipal claimsPrincipal = await _claimsPrincipalFactory.CreateAsync(this);
-        //    ((ClaimsIdentity)claimsPrincipal.Identity).AddClaim(new Claim("ImageUrl", this.ImageUrl.ToString()));
-        //    ClaimsIdentity claims = new ClaimsIdentity(this, DefaultAuthenticationTypes.ApplicationCookie);
-        //    return this;
-        //}
     }
 }

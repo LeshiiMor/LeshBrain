@@ -159,7 +159,7 @@ namespace LeshBrain.Controllers
 
         [HttpGet]
         [Authorize(Roles = ("admin,mentor,employee"))]
-        public IActionResult CompleteTest(int id,int page=0)
+        public IActionResult CompleteTest(int id, int currentresult,int page=0)
         {
             var tests = _context.Tests.Include(p => p.Questions).ThenInclude(a => a.Answers).Where(p=>p.Id==id);
             Test mainTest = tests.First();
@@ -169,6 +169,7 @@ namespace LeshBrain.Controllers
                 model.Test = mainTest;
                 model.Passer.PageNumber = page;
                 model.Passer.TotalPages = mainTest.AmountQuestion;
+                model.CurrentResult = currentresult;
                 return View(model);
             }
             return RedirectToAction("Index");
@@ -183,38 +184,27 @@ namespace LeshBrain.Controllers
             model.Test = mainTest;
             if (mainTest != null)
             {
-
-                int numQ = model.Passer.PageNumber;
-                model.Passer.PageNumber++;
-                List<Answer> answers = mainTest.Questions[numQ].Answers;
-                int maxresult = 0;
-                for(int i=0;i<answers.Count;i++)
+                if (isTrue.Count > 0)
                 {
-                    if (answers[i].RightAnswer) maxresult++;
+                    int numQ = model.Passer.PageNumber;
+                    model.Passer.PageNumber++;
+                    int maxresult = 0;
+                    for(int i=0;i<isTrue.Count;i++)
+                    {
+                        int index = int.Parse(isTrue[i]);
+                        if (mainTest.Questions[numQ].Answers[index].RightAnswer) maxresult++;
+                    }
+                    int amountRight = mainTest.Questions[numQ].Answers.Where(p => p.RightAnswer==true).Count();
+                    if(amountRight==maxresult)
+                    {
+                        model.CurrentResult++;
+                    }
+                    if (model.Passer.PageNumber >= model.Test.AmountQuestion)
+                    {
+                        return RedirectToAction("ResultCompl", new { result = model.CurrentResult, max = model.Test.AmountQuestion });
+                    }
+                    return RedirectToAction("CompleteTest", new { id = model.Test.Id, page = model.Passer.PageNumber, currentresult = model.CurrentResult });
                 }
-                int currentresult = maxresult;
-                //int answer = isTrue.Where(p => p.Equals("1")).Count();
-                int answer = isTrue.Count;
-                if(answer==currentresult)
-                {
-                    model.CurrentResult++;
-                }
-
-                //for(int i=0;i<isTrue.Count;i++)
-                //{
-                //    int num = int.Parse(isTrue[i]);
-                //    if (!answers[num].RightAnswer) currentresult--;
-                //}
-                //if(currentresult == maxresult)
-                //{
-                //    model.CurrentResult++;
-                //}
-
-                if (model.Passer.PageNumber >= model.Test.AmountQuestion)
-                {
-                    return RedirectToAction("ResultCompl", new { result = model.CurrentResult , max = model.Test.AmountQuestion });
-                }
-                return RedirectToAction("CompleteTest", new { id = model.Test.Id, page = model.Passer.PageNumber,currentresult=model.CurrentResult });
             }
             return RedirectToAction("Index");
         }
