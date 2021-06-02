@@ -16,6 +16,10 @@
     <Folder Include="wwwroot\img\" />
   </ItemGroup>
 
+  <!--<PropertyGroup>
+    <Nullable>annotations</Nullable>
+  </PropertyGroup>-->
+  
   <ItemGroup>
     <None Include="wwwroot\Content\HowLook\img\1.svg" />
     <None Include="wwwroot\Content\HowLook\img\2.svg" />

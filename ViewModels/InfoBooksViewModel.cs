@@ -11,5 +11,9 @@ namespace LeshBrain.ViewModels
     {
         public SelectList ListCategory { get; set; }
         public Book Book { get; set; }
+        public InfoBooksViewModel()
+        {
+            Book = new Book();
+        }
     }
 }

@@ -230,14 +230,6 @@
     cursor: pointer;
 }
 
-.roles-div {
-    /* margin-bottom: 40px; */
-}
-
-.del-btn {
-    /* margin-bottom: 200px; */
-}
-
 .roleName {
     font-size: 22px;
     margin-left: 20px;
@@ -340,4 +332,13 @@
     font-size: 64px;
     margin-top: 50px;
     margin-bottom: 50px;
+}
+
+.accInfo {
+    margin-left: 25px;
+    margin-top: 15px;
+}
+
+.dropdown-user {
+    width: 100%;
 }

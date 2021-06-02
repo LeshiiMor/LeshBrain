@@ -55,7 +55,7 @@ namespace LeshBrain.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Info(string idBook)
+        public  IActionResult Info(string idBook)
         {
             InfoBooksViewModel model = new InfoBooksViewModel();
             int id = int.Parse(idBook);
@@ -101,7 +101,7 @@ namespace LeshBrain.Controllers
 
         [HttpGet]
         [Authorize(Roles = "mentor,admin")]
-        public async Task<IActionResult> Add()
+        public IActionResult Add()
         {
             InfoBooksViewModel model = new InfoBooksViewModel();
             IEnumerable<Category> categories = _context.Categories.ToList();

@@ -6,7 +6,7 @@
 <div class="scroll-block table-block container">
     <div class="row d-flex justify-content-center">
         <div class="col-5">
-            <form class="filtrLib" method="post" asp-controller="Library" asp-action="Edit">
+            <form class="filtrLib" method="post" asp-controller="Test" asp-action="Edit">
                 <div class="text-center">
                     <h3>@Model.Test.Name</h3>
                 </div>
@@ -29,11 +29,11 @@
                                 <label for="opis">Описание</label>
                                 @if ((User.IsInRole("mentor") || User.IsInRole("admin")) )
                                 {
-                                    <textarea asp-for="Test.Description" name="" id="" cols="30" rows="4" itemid="opis" class="tbhr-input form-control"></textarea>
+                                    <textarea asp-for="Test.Description" cols="30" rows="4" itemid="opis" class="tbhr-input form-control"></textarea>
                                 }
                                 else
                                 {
-                                    <textarea asp-for="Test.Description" name="" id="" cols="30" rows="4" itemid="opis" class="tbhr-input form-control" disabled></textarea>
+                                    <textarea asp-for="Test.Description" cols="30" rows="4" itemid="opis" class="tbhr-input form-control" disabled></textarea>
                                 }
                             </div>
                             <div class="m-3">
