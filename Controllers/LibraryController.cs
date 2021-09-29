@@ -139,8 +139,6 @@ namespace LeshBrain.Controllers
         [Authorize(Roles = "mentor,admin")]
         public IActionResult Delete(int id)
         {
-            Book test = new Book();
-            test.Name="whie";
             Book book = _context.Books.Find(id);
             if(book!=null)
             {
