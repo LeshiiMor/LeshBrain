@@ -4,14 +4,46 @@
     ViewData["Name"] = "Аккаунты";
 }
 <div class="scroll-block text-center">
-    <div class="user-info  container">
+    <div class="img-cont container">
+        <div class="row">
+            <div class="col">
+                <img src="" alt="avatar" id="persAva" class="hide img-avatar rounded-circle">
+            </div>
+        </div>
+    </div>
+    <div class="create-div user-info  container">
         <div class="row justify-content-center">
             <div class="form-cont col-9">
-                <div class="mt-4">
-                    <h3>Персональная информация</h3>
-                </div>
-                <form method="post" asp-controller="Account" asp-action="Create" class="form-edit">
+                <form method="post" asp-controller="Account" asp-action="Create" class="form-edit" enctype="multipart/form-data">
                     <div class="container-fluid">
+                        <div class="row">
+                            <div class="col">
+                                <h3>Аватар пользователя</h3>
+                                <div class="d-flex justify-content-center">
+                                    <div class="file-block">
+                                        <input name="UserAvatar" type="file" id="fileInput" onchange="updateUrl(this)" />
+                                        <label for="fileInput" class="label-file">
+                                            <div class="label-content">
+                                                <span>
+                                                    <img src="~/img/paperClipIcon.svg" id="paperClip" class="label-file-icon" />
+                                                    <img src="~/img/completeIcon.svg" id="completeIcon" class="label-file-icon hide"/><br />
+                                                </span>
+                                                <span class="file-text">Добавить файл</span>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container-fluid">
+                        <div class="row justify-content-center">
+                            <div class="col">
+                                <div class="mt-4">
+                                    <h3>Персональная информация</h3>
+                                </div>
+                            </div>
+                        </div>
                         <div class="row justify-content-center">
                             <div class="col-md-5">
                                 <div class="mb-3">
@@ -76,10 +108,10 @@
                                         <h3>Роли</h3>
                                     </div>
                                     <div class="form-roles">
-                                            @foreach (var role in Model.AllRoles)
-                                            {
-                                                <input type="checkbox" name="roles" value="@role.Name" @(role.Name =="anon"? "checked=\"checked\"" : "") class="mb-4"><span class="roleName">@role.Name</span><br>
-                                            }
+                                        @foreach (var role in Model.AllRoles)
+                                        {
+                                            <input type="checkbox" name="roles" value="@role.Name" @(role.Name == "anon" ? "checked=\"checked\"" : "") class="mb-4"><span class="roleName">@role.Name</span><br>
+                                        }
                                     </div>
                                 </div>
                             </div>

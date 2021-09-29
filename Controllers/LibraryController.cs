@@ -110,8 +110,6 @@ namespace LeshBrain.Controllers
         }
 
         [HttpPost]
-        //[RequestSizeLimit(100_000_000)]
-        //[DisableRequestSizeLimit]
         [Authorize(Roles = "mentor,admin")]
         public async Task<IActionResult> Add(InfoBooksViewModel model, string categoryID, IFormFile newFile)
         {
@@ -142,8 +140,15 @@ namespace LeshBrain.Controllers
         public IActionResult Delete(int id)
         {
             Book book = _context.Books.Find(id);
-            _context.Books.Remove(book);
-            _context.SaveChanges();
+            if(book!=null)
+            {
+                if(System.IO.File.Exists("wwwroot/"+book.ResourceURL))
+                {
+                    System.IO.File.Delete("wwwroot/" + book.ResourceURL);
+                    _context.Books.Remove(book);
+                    _context.SaveChanges();
+                }
+            }    
             return RedirectToAction("Index");
         }
     }

@@ -8,6 +8,9 @@ using LeshBrain.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 
 namespace LeshBrain.Controllers
 {
@@ -17,12 +20,15 @@ namespace LeshBrain.Controllers
         private readonly SignInManager<UserEntity> _signInManager;
         private readonly RoleManager<IdentityRole<int>> _roleManager;
         private readonly ContextDB _context;
-        public AccountController(UserManager<UserEntity> userManager, SignInManager<UserEntity> signInManager,ContextDB context, RoleManager<IdentityRole<int>> roleManager)
+        private IWebHostEnvironment _webHost;
+        public AccountController(UserManager<UserEntity> userManager, SignInManager<UserEntity> signInManager,ContextDB context,
+            RoleManager<IdentityRole<int>> roleManager,IWebHostEnvironment webHost)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _context = context;
             _roleManager = roleManager;
+            _webHost = webHost;
         }
 
         [HttpGet]
@@ -186,7 +192,15 @@ namespace LeshBrain.Controllers
             UserEntity user = await _userManager.FindByIdAsync(id);
             if (user != null)
             {
+                string URL = user.ImageUrl;
                 IdentityResult result = await _userManager.DeleteAsync(user);
+                if(result.Succeeded)
+                {
+                    if (System.IO.File.Exists("wwwroot/" + URL))
+                    {
+                        System.IO.File.Delete("wwwroot/" + URL);
+                    }
+                }
             }
             return RedirectToAction("Accounts");
         }
@@ -203,21 +217,32 @@ namespace LeshBrain.Controllers
 
         [HttpPost]
         [Authorize(Roles = ("admin"))]
-        public async Task<IActionResult> Create(CreateUserViewModel model,List<string> roles)
+        public async Task<IActionResult> Create(IFormFile UserAvatar, CreateUserViewModel model, List<string> roles)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 UserEntity newuser = new UserEntity()
                 {
-                    Name=model.Name,
-                    Surname=model.Surname,
-                    Patronym=model.Patronym,
-                    Email=model.Email,
-                    PhoneNumber=model.Phone,
-                    UserName=model.UserName
+                    Name = model.Name,
+                    Surname = model.Surname,
+                    Patronym = model.Patronym,
+                    Email = model.Email,
+                    PhoneNumber = model.Phone,
+                    UserName = model.UserName
                 };
+
+                if (UserAvatar != null)
+                {
+                    string path = "/Content/UsersImage/" + UserAvatar.FileName;
+                    using (var fileStream = new FileStream(_webHost.WebRootPath + path, FileMode.Create))
+                    {
+                        await UserAvatar.CopyToAsync(fileStream);
+                        newuser.ImageUrl = path;
+                    }
+                }
+
                 IdentityResult result = await _userManager.CreateAsync(newuser, model.Password);
-                if(result.Succeeded)
+                if (result.Succeeded)
                 {
                     if (roles.Count != 0)
                     {
@@ -225,7 +250,7 @@ namespace LeshBrain.Controllers
                     }
                     else
                     {
-                        await _userManager.AddToRoleAsync(newuser, "anon");
+                        await _userManager.AddToRoleAsync(newuser, "anon" );
                     }
                 }
             }

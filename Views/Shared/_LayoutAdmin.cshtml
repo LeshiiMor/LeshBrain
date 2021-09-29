@@ -109,63 +109,15 @@
     <script src="~/js/bootstrap.bundle.js"></script>
 
     <script src="~/js/jquery.min.js"></script>
+    <script src="~/js/cabinet.js"></script>
     <script>
-        $('.nav-admin-item').removeClass('active-item');
-        var item = $('.namePage').text();
-        var listNav = $('.nav-admin-link')
-        for (var i = 0; i < listNav.length; i++)
+        $('.info-row').on('click', function ()
         {
-            if (listNav[i].textContent === item) listNav[i].parentElement.parentElement.classList.add('active-item')
-        }
-
-        $('.info-row').on('click', function () {
             var id = $(event.target.parentElement).data('value');
             $.ajax({
                 type: 'GET',
                 url: '@Url.Action("UserInfo","Account")',
                 data: { 'idUser': id },
-                success: function (msg) {
-                    $('#main').html(msg);
-                },
-                error: function (req, status, error) {
-                    console.log(msg);
-                }
-            });
-        })
-    </script>
-    <script>
-        $('#createRolebtn').on('click', function () {
-            $('#hideCreaterolbtn').slideDown()
-            $('.form').slideDown()
-        })
-        $('#hideCreaterolbtn').on('click', function () {
-            $(this).slideToggle()
-            $('.form').slideToggle()
-        })
-    </script>
-    <script>
-        $('.book-card').on('click', function () {
-            var id = $(this).data('id');
-            $.ajax({
-                type: 'GET',
-                url: '@Url.Action("Info","Library")',
-                data: { 'idBook': id },
-                success: function (msg) {
-                    $('#main').html(msg);
-                },
-                error: function (req, status, error) {
-                    console.log(msg);
-                }
-            });
-        })
-    </script>
-    <script>
-        $('.test-card').on('click', function () {
-            var id = $(this).data('id');
-            $.ajax({
-                type: 'GET',
-                url: '@Url.Action("Info","Test")',
-                data: { 'id': id },
                 success: function (msg) {
                     $('#main').html(msg);
                 },

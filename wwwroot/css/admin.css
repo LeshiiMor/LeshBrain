@@ -169,6 +169,7 @@
 
 .img-avatar {
     width: 200px;
+    height:200px;
 }
 
 .img-cont {
@@ -341,4 +342,51 @@
 
 .dropdown-user {
     width: 100%;
+}
+.create-div
+{
+    margin-top:20px;
+}
+.file-block
+{
+    border:4px dashed black;
+    opacity:0.7;
+    width:180px;
+    height:180px;
+    margin-top:35px;
+    margin-bottom:35px;
+}
+.file-block:hover
+{
+    border:solid black;
+    opacity:1;
+}
+#fileInput 
+{
+    display: none;
+}
+.label-file
+{
+    width:100%;
+    height:100%;
+}
+.label-file:hover {
+    cursor: pointer;
+}
+.hide{
+    display:none;
+}
+
+#paperClip{
+   /* width:50px;*/
+}
+.file-text{
+    font-size:18px;
+}
+.label-content {
+    padding-top: 40px;
+}
+.label-file-icon{
+    padding:0px;
+    width:60px;
 }
